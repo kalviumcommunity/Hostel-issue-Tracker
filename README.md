@@ -72,3 +72,28 @@ Syncly faced issues with delayed updates, insecure sessions, and file storage. H
 2.  **Real-time Test**: Run the app on two different emulators. Add an issue on Device A; observe it appear instantly on Device B.
 3.  **Persistance**: Restart the app; the user remains logged in and data persists.
 
+## Assignment: Design to Code & Responsive UI
+
+### 1. Design Thinking Process
+*   **Empathize**: Students need a quick way to report issues without complicated forms.
+*   **Define**: The problem is that current reporting is slow and opaque. The UI must be transparent and fast.
+*   **Ideate & Prototype**:
+    *   *Mobile*: A simple list view for quick scrolling.
+    *   *Tablet/Desktop*: A dashboard grid view to see multiple issues at once.
+*   **Translation**: We used Flutter's `LayoutBuilder` to switch between a `ListView` (Mobile) and `GridView` (Tablet).
+
+### 2. Case Study: "The App That Looked Perfect, But Only on One Phone"
+**Scenario Analysis:**
+FlexiFit failed because they designed for a single screen size (fixed pixels).
+
+*   **Responsive Strategy**:
+    *   **MediaQuery**: Used to determine screen width and adjust the Login Container size (max width 400px on tablets) so it doesn't stretch weirdly.
+    *   **LayoutBuilder**: Used in the `HomeScreen` to toggle between a standard `Scaffold` body and a `Row` with a `NavigationRail` for wider screens.
+    *   **Flexible/Expanded**: Used `Expanded` inside the Row to ensure the content takes up remaining space without overflowing.
+
+### 3. Verification
+*   **Mobile**: Run on a phone emulator -> See a List View.
+*   **Tablet**: Run on a tablet emulator (or resize window) -> See a Grid View with a Side Navigation Rail.
+*   **Styling**: The app now uses a consistent Purple/Teal theme with rounded corners (`borderRadius: 12`) matching modern Material 3 design.
+
+
