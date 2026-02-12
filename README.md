@@ -96,4 +96,26 @@ FlexiFit failed because they designed for a single screen size (fixed pixels).
 *   **Tablet**: Run on a tablet emulator (or resize window) -> See a Grid View with a Side Navigation Rail.
 *   **Styling**: The app now uses a consistent Purple/Teal theme with rounded corners (`borderRadius: 12`) matching modern Material 3 design.
 
+## Assignment: Flutter Basics & Folder Structure
+
+### 1. Folder Structure
+We have organized the code to be modular and scalable:
+*   `lib/main.dart`: Entry point of the app. Initializes Firebase and theme, then launches `WelcomeScreen`.
+*   `lib/screens/`: Contains all full-page UI widgets.
+    *   `welcome_screen.dart`: The introductory landing page with a "Get Started" interaction.
+    *   `login_screen.dart`: Handles User Auth (Sign In/Sign Up).
+    *   `home_screen.dart`: The main dashboard for viewing and reporting issues.
+*   `lib/widgets/`: (Future use) Reusable small UI components (e.g., custom buttons, cards).
+*   `lib/models/`: (Future use) Data models for Issue, User, etc.
+
+### 2. Demo & Reflection
+**Features:**
+*   **Welcome Screen**: Features a custom UI with an Image, Title, and an interactive Button.
+*   **State Management**: clicking "Get Started" triggers a visual state change (button animation) before navigating.
+*   **Navigation**: Seamless flow from Welcome -> Login -> Home.
+
+**Reflection:**
+Flutter's widget-based composition makes it easy to build complex UIs from simple building blocks. Dividing the app into `screens` and separate files keeps `main.dart` clean and makes the codebase easier to navigate as it grows.
+
+
 
