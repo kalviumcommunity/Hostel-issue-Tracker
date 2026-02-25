@@ -4,6 +4,24 @@
 This project is a mobile application for tracking hostel issues, built with Flutter and Firebase.
 This repository contains the source code for the "Sprint 2" assignment and initial project setup.
 
+## 📚 Project Documentation
+- **API Documentation:** [Postman Collection (JSON)](docs/flutter_firebase_postman.json)
+- **System Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)
+- **Version:** 1.0.0
+- **Last Updated:** 2025-11-13
+
+---
+
+## 💡 Reflection: Documentation & Versioning
+
+### a. How API documentation improves collaboration and onboarding
+Clear API documentation acts as a single source of truth for both frontend and backend developers. For a Flutter + Firebase project, it helps new team members understand which Firestore collections are being used, what the expected data shapes are, and how authentication is handled without needing to dive deep into the source code or the Firebase Console. This significantly reduces onboarding time and prevents integration errors during development.
+
+### b. How versioning and metadata help maintain long-term consistency
+Versioning and metadata (like base URLs and update dates) provide historical context for the project's evolution. As the app grows and the database schema or auth requirements change, versioning allows teams to track which version of the client app works with which API structure. Metadata ensures that everyone is pointing to the correct environment (production vs. staging), preventing accidental data corruption or service outages during environment transitions.
+
+---
+
 ## Assignment: Flutter Architecture & Dart Essentials
 
 ### 1. StatelessWidget vs StatefulWidget

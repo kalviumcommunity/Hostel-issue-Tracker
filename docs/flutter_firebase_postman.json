@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-4a5b-8c9d-1234567890ab",
+		"name": "Flutter-Firebase API Documentation",
+		"description": "API documentation for the Hostel Issue Tracker project using Firebase Auth and Firestore.\n\n**Version:** 1.0.0\n**Base URL:** https://hostel-issue-tracker.firebaseapp.com\n**Auth:** Firebase Token / OAuth\n**Updated:** 2025-11-13",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Sign In with Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"securePassword123\",\n    \"returnSecureToken\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signInWithPassword"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "[API_KEY]"
+								}
+							]
+						},
+						"description": "Signs in a user with email and password using Firebase Identity Toolkit."
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up with Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"newuser@example.com\",\n    \"password\": \"securePassword123\",\n    \"returnSecureToken\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signUp"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "[API_KEY]"
+								}
+							]
+						},
+						"description": "Creates a new user account with email and password."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Firestore - Issues",
+			"item": [
+				{
+					"name": "Get All Issues",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{idToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://firestore.googleapis.com/v1/projects/{{projectId}}/databases/(default)/documents/issues?orderBy=createdAt desc",
+							"protocol": "https",
+							"host": [
+								"firestore",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"projects",
+								"{{projectId}}",
+								"databases",
+								"(default)",
+								"documents",
+								"issues"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "createdAt desc"
+								}
+							]
+						},
+						"description": "Retrieves all reported issues from Firestore, ordered by creation date."
+					},
+					"response": []
+				},
+				{
+					"name": "Report New Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{idToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fields\": {\n        \"description\": { \"stringValue\": \"Leaking tap in Room 202\" },\n        \"createdAt\": { \"timestampValue\": \"2023-11-13T12:00:00Z\" },\n        \"status\": { \"stringValue\": \"Open\" },\n        \"userId\": { \"stringValue\": \"user_uid_123\" }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://firestore.googleapis.com/v1/projects/{{projectId}}/databases/(default)/documents/issues",
+							"protocol": "https",
+							"host": [
+								"firestore",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"projects",
+								"{{projectId}}",
+								"databases",
+								"(default)",
+								"documents",
+								"issues"
+							]
+						},
+						"description": "Adds a new issue report to the 'issues' collection."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "projectId",
+			"value": "your-app-id"
+		},
+		{
+			"key": "idToken",
+			"value": "your-firebase-id-token"
+		}
+	]
+}
