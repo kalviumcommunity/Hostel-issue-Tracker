@@ -166,3 +166,38 @@ One of the main challenges of making the layout responsive was deciding the brea
 
 **Impact on Usability:**
 Responsive design profoundly improves real-world usability. A user accessing the Hostel tracker on a phone needs vertical, easily scrollable information. The same user on a desktop/tablet expects a denser layout utilizing the available horizontal space without wasting margins. Adaptive UI directly controls readability and interaction speed, making the application feel tailor-made for whatever device is being used.
+
+## Assignment: Flutter Environment Setup & First App Run
+
+### 1. Flutter Environment Setup and First App Run
+This section verifies that the local development environment is correctly configured with the Flutter SDK, Android Studio, and a working Android Emulator.
+
+### 2. Steps Followed
+1. Downloaded and extracted the Flutter SDK.
+2. Added the `flutter/bin` directory to the system PATH.
+3. Installed Android Studio along with the Android SDK, Android SDK Platform, and Android Virtual Device (AVD) Manager.
+4. Installed the Flutter and Dart plugins in Android Studio/VS Code.
+5. Created a Pixel 6 Virtual Device running Android 13+ via AVD Manager.
+6. Verified the installation and emulator connectivity using `flutter doctor` and `flutter devices`.
+7. Created and ran a standard Flutter dummy project (`first_flutter_app`) to confirm the emulator and SDK are communicating perfectly.
+8. Successfully ran the `Hostel Issue Tracker` application on the local emulator.
+
+### 3. Setup Verification (Screenshots)
+
+*Note: Replace the placeholders below with the actual screenshots of your environment.*
+
+**Diagnostic Check**
+![Flutter Doctor Output](<link_to_flutter_doctor_screenshot.png>)
+*Figure 3: Output of `flutter doctor` verifying all necessary components are installed and green.*
+
+**Emulator Run**
+![Emulator Running App](<link_to_emulator_screenshot.png>)
+*Figure 4: The Flutter application running successfully on the configured Android emulator.*
+
+### 4. Reflection
+**Challenges Faced during Installation:**
+The most common challenges involve setting up the system PATH correctly to ensure the `flutter` command is recognized everywhere, and resolving licensing issues within Android Studio. Downloading the correct system images for the emulator can also be time-consuming depending on network speeds.
+
+**Preparation for Real Apps:**
+Having a stable, fully functional environment eliminates "it works on my machine" issues. The emulator allows rapid testing of UI changes across different emulated hardware configurations without needing a physical device for every test. Relying on `flutter doctor` ensures that any future dependencies or SDK updates can be verified quickly, keeping the development cycle smooth and predictable.
+
