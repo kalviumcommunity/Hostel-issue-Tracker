@@ -228,3 +228,54 @@ Understanding the folder roles is like knowing where the tools are in a workshop
 **How does a clean structure help when working in a team environment?**
 A clean, modular structure (like separating `screens/` from `widgets/`) enables multiple developers to work on the same application concurrently with minimal merge conflicts. It establishes a consistent convention; a new team member doesn't need to ask where to put a new feature, as the established folder hierarchy dictates the organization organically.
 
+## Assignment: Widget Tree & Reactive UI Model
+
+### Project Title
+**Hostel Issue Tracker: Reactive Demo App**
+This section demonstrates how Flutter organizes the UI into a hierarchy of widgets (the Widget Tree) and showcases the reactive UI model where state changes efficiently and automatically trigger UI updates.
+
+### Widget Tree Hierarchy
+The demo screen `reactive_demo_screen.dart` is constructed using the following widget hierarchy:
+
+```text
+Scaffold
+ ┣ AppBar
+ │  ┗ Text (Title)
+ ┗ Center
+    ┗ Padding
+       ┗ Column
+          ┣ Card (Conditionally Visible)
+          │  ┗ Padding
+          │     ┗ Column
+          │        ┣ Icon
+          │        ┣ SizedBox
+          │        ┗ Text (Count Display)
+          ┣ SizedBox
+          ┣ ElevatedButton.icon
+          ┣ SizedBox
+          ┗ OutlinedButton.icon
+```
+
+### State Updates Demonstration (Screenshots)
+
+*Note: Replace the placeholders below with the actual screenshots of your application.*
+
+**Initial UI State**
+![Initial State](<link_to_initial_state_screenshot.png>)
+*Figure 6: The initial state of the application before any interaction (Count: 0, Light Mode).*
+
+**Updated UI State**
+![Updated State](<link_to_updated_state_screenshot.png>)
+*Figure 7: The updated state after clicking the 'Change State' button (Count: > 0, Dark Mode).*
+
+### Reflection
+
+**What is a widget tree?**
+A widget tree is a hierarchical data structure in Flutter where each node represents a UI element (like a text box, button, or layout container). The tree describes the composition of the user interface, starting from the root app configuration down to the smallest visual components. Children widgets are nested within parent widgets, detailing exactly how the UI should be rendered on the screen.
+
+**How does the reactive model work in Flutter?**
+Flutter’s reactive model means that the UI is a direct reflection of application state. We do not explicitly tell a widget to redraw or modify its appearance directly (e.g., `textNode.setText("hello")`). Instead, we mutate the underlying state data by wrapping it in a `setState()` call. This function signals to the Flutter framework that internal data has changed, prompting the framework to automatically call the `build()` method again on that specific widget, generating a new, updated widget tree representation.
+
+**Why does Flutter rebuild only parts of the tree and not the entire UI?**
+Rebuilding the entire application UI 60+ times a second would be computationally expensive and drain the device battery. Flutter optimizes performance by using an intelligent diffing algorithm. When `setState()` is called on a specific widget (like our `_ReactiveDemoScreenState`), Flutter marks *only* that subtree as "dirty". During the next frame, it rapidly compares the new widget configuration (which is extremely lightweight) against the underlying "Element Tree". It then strategically updates only the final rendering "Render Objects" that actually experienced a change, leaving the rest of the application completely untouched. This selective rebuilding ensures buttery smooth 60/120 FPS performance even in highly dynamic apps.
+
