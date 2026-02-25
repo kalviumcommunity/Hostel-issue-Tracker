@@ -117,5 +117,52 @@ We have organized the code to be modular and scalable:
 **Reflection:**
 Flutter's widget-based composition makes it easy to build complex UIs from simple building blocks. Dividing the app into `screens` and separate files keeps `main.dart` clean and makes the codebase easier to navigate as it grows.
 
+## Assignment: Responsive Mobile Interfaces
 
+### Project Title
+**Hostel Issue Tracker: Responsive Layout Demo**
+This deliverable demonstrates how to construct adaptive layouts in Flutter. The goal is to ensure that the interface remains readable, interactive, and aesthetically pleasing whether viewed on a narrow phone screen or a wider tablet/desktop window, ensuring native-like experiences across form factors.
 
+### Code Snippets
+Here is how responsiveness was achieved using `MediaQuery` and `LayoutBuilder`:
+
+**Using `MediaQuery`**
+We query the actual dimensions of the screen layout to determine basic breakpoints.
+```dart
+// 2. Implement Responsiveness with MediaQuery
+double screenWidth = MediaQuery.of(context).size.width;
+bool isTablet = screenWidth > 600;
+```
+
+**Using `LayoutBuilder`**
+We conditionally render entirely different layouts (`ListView` vs `GridView`) based on whether the device classifies as a tablet or a phone:
+```dart
+// 3. Apply Flexible and Adaptive Widgets using LayoutBuilder
+body: LayoutBuilder(
+  builder: (context, constraints) {
+    if (isTablet) {
+      // Displaying a two-column grid for tablets
+      return _buildTabletLayout(context);
+    } else {
+      // Displaying a single-column layout for phones
+      return _buildMobileLayout(context);
+    }
+  },
+),
+```
+
+### Screenshots
+*Note: Replace the placeholders below with the actual screenshots of your application.*
+
+![Mobile Portrait Layout](<link_to_mobile_screenshot.png>)
+*Figure 1: Single-column View on a Mobile Device*
+
+![Tablet Landscape Layout](<link_to_tablet_screenshot.png>)
+*Figure 2: Multi-column Grid View on a Tablet Device*
+
+### Reflection
+**Challenges Faced:** 
+One of the main challenges of making the layout responsive was deciding the breakpoint at which a UI is no longer optimal as a single column. Ensuring that widgets like `Card` and `ListTile` don't stretch unnervingly on wide screens required switching entirely to a `GridView`, testing different `childAspectRatio` values to find the right balance between height and width for grid items.
+
+**Impact on Usability:**
+Responsive design profoundly improves real-world usability. A user accessing the Hostel tracker on a phone needs vertical, easily scrollable information. The same user on a desktop/tablet expects a denser layout utilizing the available horizontal space without wasting margins. Adaptive UI directly controls readability and interaction speed, making the application feel tailor-made for whatever device is being used.
