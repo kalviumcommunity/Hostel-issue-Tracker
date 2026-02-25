@@ -201,3 +201,30 @@ The most common challenges involve setting up the system PATH correctly to ensur
 **Preparation for Real Apps:**
 Having a stable, fully functional environment eliminates "it works on my machine" issues. The emulator allows rapid testing of UI changes across different emulated hardware configurations without needing a physical device for every test. Relying on `flutter doctor` ensures that any future dependencies or SDK updates can be verified quickly, keeping the development cycle smooth and predictable.
 
+## Assignment: Flutter Project Folder Structure Exploration
+
+### Project Setup Overview
+The **Hostel Issue Tracker** project is initialized with a standard Flutter application structure, optimized for both Android and iOS cross-platform development. We've logically separated our Dart logic, utilized native folders for platform configurations, and set up a foundation ready to scale.
+
+### Folder Structure Overview
+The foundation of a maintainable app lies in its organization. Our project relies on several key directories:
+*   `lib/`: The heart of the application containing all Dart code organized by UI screens, reusable widgets, and data models.
+*   `pubspec.yaml`: The control center for all project dependencies and assets.
+*   `android/` & `ios/`: The bridge folders that compile our Dart code into native mobile experiences.
+
+For a comprehensive explanation of every folder and its specific role, please view the detailed [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) file.
+
+### Structure Screenshot
+*Note: Replace the placeholder below with an actual screenshot of your IDE folder hierarchy.*
+
+![Project Folder Hierarchy](<link_to_folder_screenshot.png>)
+*Figure 5: The Hostel Issue Tracker folder tree as seen in the IDE.*
+
+### Reflection on Structure
+
+**Why is it important to understand the role of each folder?**
+Understanding the folder roles is like knowing where the tools are in a workshop. It prevents developers from putting native Android configurations into cross-platform UI folders, or accidentally checking in unnecessary build artifacts. This knowledge speeds up development because you instantly know where to look to solve a specific problem—whether it's a UI bug (`lib/`) or a dependency issue (`pubspec.yaml`).
+
+**How does a clean structure help when working in a team environment?**
+A clean, modular structure (like separating `screens/` from `widgets/`) enables multiple developers to work on the same application concurrently with minimal merge conflicts. It establishes a consistent convention; a new team member doesn't need to ask where to put a new feature, as the established folder hierarchy dictates the organization organically.
+
