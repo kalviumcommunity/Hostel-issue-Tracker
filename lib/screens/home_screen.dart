@@ -52,6 +52,14 @@ class HomeScreen extends StatelessWidget {
             title: const Text('Dashboard'),
             centerTitle: false,
             actions: [
+              IconButton(
+                onPressed: () {
+                  // Push to the named route and pass arguments
+                  Navigator.pushNamed(context, '/profile', arguments: 'Hostel Resident');
+                },
+                icon: const Icon(Icons.person),
+                tooltip: 'Profile',
+              ),
               IconButton(onPressed: () => FirebaseAuth.instance.signOut(), icon: const Icon(Icons.logout))
             ],
           ),

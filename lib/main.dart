@@ -8,6 +8,7 @@ import 'screens/home_screen.dart';
 import 'screens/responsive_home.dart';
 import 'screens/reactive_demo_screen.dart';
 import 'screens/stateless_stateful_demo.dart';
+import 'screens/profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,8 +47,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      // Start with Stateless Stateful Demo Screen for Sprint 2
-      home: const StatelessStatefulDemoScreen(),
+      // Defined named routes map for structured navigation
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthGate(),
+        '/profile': (context) => const ProfileScreen(),
+      },
     );
   }
 }

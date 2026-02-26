@@ -415,3 +415,80 @@ While `print` statements are fine for simple variable tracking, DevTools provide
 
 **How can you use these tools in a team development workflow?**
 In a team context, DevTools establishes a common, objective ground for finding bugs. If a QA engineer reports a UI glitch on a specific device, a developer can run DevTools to inspect exactly how the layout constraints are being calculated for that screen size. Furthermore, using `debugPrint` ensures that logs are clean and not dropped by internal Android/iOS loggers (unlike standard `print`). Teams can mandate checking the Performance tab before a PR is merged to guarantee new features do not degrade the app's framerate.
+
+## Assignment: Multi-Screen Navigation (Sprint 2)
+
+### Project Title
+**Hostel Issue Tracker: Profile Routing**
+This implementation demonstrates the use of Flutter's `Navigator` class to handle multi-screen transitions using Named Routes. The app now features a structured routing mapped from `main.dart`, connecting the Dashboard to a new dynamically built `ProfileScreen` by passing contextual arguments.
+
+### Code Snippets
+
+**1. Defining Named Routes (`main.dart`)**
+We replaced the static `home` property with a routing map. This allows for clean URLs internally and decouples screen definitions.
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthGate(),
+        '/profile': (context) => const ProfileScreen(),
+      },
+    );
+  }
+}
+```
+
+**2. Pushing a Route from Home (`home_screen.dart`)**
+On the dashboard, we use an `IconButton` to trigger the navigation forward while passing necessary strings to the destination.
+```dart
+IconButton(
+  onPressed: () {
+    Navigator.pushNamed(context, '/profile', arguments: 'Hostel Resident');
+  },
+  icon: const Icon(Icons.person),
+  tooltip: 'Profile',
+),
+```
+
+**3. Receiving Data and Popping (`profile_screen.dart`)**
+The Profile screen inherently lacks state, but uses `ModalRoute` to fetch the passed argument instantly as the screen is built. A programmatic back button calls `pop`.
+```dart
+@override
+Widget build(BuildContext context) {
+  final args = ModalRoute.of(context)?.settings.arguments as String?;
+  final roleText = args ?? 'Unknown Role';
+  
+  // Scaffold implementation with styling omitted...
+  
+  ElevatedButton.icon(
+    onPressed: () {
+      Navigator.pop(context);
+    },
+    icon: const Icon(Icons.arrow_back),
+    label: const Text('Return to Dashboard'),
+  )
+}
+```
+
+### Screenshots and Video Demo
+*Note: Replace the placeholders below with actual project media.*
+
+**Dashboard (Home Screen)**
+![Home Screen](<link_to_home_screen_screenshot.png>)
+*Figure 13: Dashboard with the new Profile navigation icon in the top right.*
+
+**Profile Screen**
+![Profile Screen](<link_to_profile_screen_screenshot.png>)
+*Figure 14: Profile page successfully displaying the 'Hostel Resident' argument and a return button.*
+
+**Video Link:** [Link to Navigation Demo Video](<your_video_link>)
+
+### Reflection
+**How does Navigator manage the app’s stack of screens?**
+The Flutter `Navigator` operates as a Last-In, First-Out (LIFO) stack overlay. When a user is on the HomeScreen, the stack contains `[/, /home]`. Calling `Navigator.push()` places the new `ProfileScreen` precisely on top of the old screen without destroying the old one `[/, /home, /profile]`. This preserves the scroll positions and state of the Home layer beneath. Calling `Navigator.pop()` simply destroys the top layer, instantly displaying the cached Home layer exactly as it was left.
+
+**What are the benefits of using named routes in larger applications?**
+Named routes drastically simplify code maintenance as an app scales. Instead of manually importing the `ProfileScreen` file into 10 different unrelated UI files just to perform a `MaterialPageRoute` build, named routes centralize the destination logic in `main.dart`. UI layers only need to know a simple string `'/profile'` to jump anywhere in the app. This is crucial for deep linking (e.g., clicking a push notification), modular design, keeping compilation fast, and cleanly integrating with sophisticated analytical packages.
