@@ -7,6 +7,7 @@ import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/responsive_home.dart';
 import 'screens/reactive_demo_screen.dart';
+import 'screens/stateless_stateful_demo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,8 +46,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      // Start with Reactive Demo Screen for the assignment demo
-      home: const ReactiveDemoScreen(),
+      // Start with Stateless Stateful Demo Screen for Sprint 2
+      home: const StatelessStatefulDemoScreen(),
     );
   }
 }

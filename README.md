@@ -279,3 +279,89 @@ Flutter’s reactive model means that the UI is a direct reflection of applicati
 **Why does Flutter rebuild only parts of the tree and not the entire UI?**
 Rebuilding the entire application UI 60+ times a second would be computationally expensive and drain the device battery. Flutter optimizes performance by using an intelligent diffing algorithm. When `setState()` is called on a specific widget (like our `_ReactiveDemoScreenState`), Flutter marks *only* that subtree as "dirty". During the next frame, it rapidly compares the new widget configuration (which is extremely lightweight) against the underlying "Element Tree". It then strategically updates only the final rendering "Render Objects" that actually experienced a change, leaving the rest of the application completely untouched. This selective rebuilding ensures buttery smooth 60/120 FPS performance even in highly dynamic apps.
 
+## Assignment: Stateless vs Stateful Widgets Demo (Sprint 2)
+
+### Project Title
+**Hostel Issue Tracker: Stateless vs Stateful Interactive Demo**
+This demo application showcases the fundamental differences between `StatelessWidget` and `StatefulWidget` in Flutter. The app features a static header combined with a highly interactive body that allows users to increment a counter and toggle between a light and dark theme context.
+
+### Concept Explanations
+*   **StatelessWidget**: A widget that does not require mutable state. Once built, it remains static until its parent rebuilds it. We use it for the `DemoHeader` because the title and text remain constant throughout the lifecycle of the screen.
+*   **StatefulWidget**: A widget that maintains internal state which can change dynamically during the app's lifecycle. We use it for the `InteractiveArea` to react to button presses (counter) and switch toggles (theme changing), updating the UI visually in real-time.
+
+### Code Snippets
+**StatelessWidget Implementation**
+```dart
+class DemoHeader extends StatelessWidget {
+  final String title;
+
+  const DemoHeader({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // Container styling omitted for brevity
+      child: Column(
+        children: [
+          const Icon(Icons.widgets, size: 48, color: Colors.deepPurple),
+          Text(title),
+          Text('This header is a StatelessWidget. It remains static.'),
+        ],
+      ),
+    );
+  }
+}
+```
+
+**StatefulWidget Implementation**
+```dart
+class InteractiveArea extends StatefulWidget {
+  const InteractiveArea({super.key});
+
+  @override
+  State<InteractiveArea> createState() => _InteractiveAreaState();
+}
+
+class _InteractiveAreaState extends State<InteractiveArea> {
+  int _counter = 0;
+  bool _isDarkMode = false;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _toggleTheme(bool value) {
+    setState(() {
+      _isDarkMode = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // The build method returns a Column with a Counter button and a Theme Switch.
+    // They trigger `_incrementCounter` and `_toggleTheme`, updating the UI dynamically.
+  }
+}
+```
+
+### Screenshots and Video Demo
+*Note: Replace the placeholders below with the actual screenshots and video reference.*
+
+**Before Interaction**
+![Before Interaction](<link_to_before_screenshot.png>)
+*Figure 8: Initial state showing counter at 0 and Light Mode.*
+
+**After Interaction**
+![After Interaction](<link_to_after_screenshot.png>)
+*Figure 9: Updated state showing incremented counter and Dark Mode.*
+
+**Video Link:** [Link to Demo Video Here](<your_video_link>)
+
+### Reflection
+**How do Stateful widgets make Flutter apps dynamic?**
+Stateful widgets bring apps to life by listening for data changes and user events. When `setState()` is called, Flutter is notified that the internal context has changed, and it triggers a partial UI rebuild. This allows the application to cleanly re-render forms, counters, or layout themes without needing an entire page refresh, making the app feel responsive and "live."
+
+**Why is it important to separate static and reactive parts of the UI?**
+Separating static UI elements (Stateless) from reactive components (Stateful) is crucial for performance and maintainability. It prevents Flutter from unnecessarily rebuilding components that don't need to change. By isolating the dynamic behaviors to smaller Stateful widgets, the framework can perform localized updates, leading to a much more efficient app while keeping our code well-structured.
