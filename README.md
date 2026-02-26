@@ -582,3 +582,75 @@ The main challenge was handling constraints inside nested widgets. For example, 
 
 **How can you improve your layout for different screen orientations?**
 Beyond `MediaQuery` width checks, layouts can be improved by wrapping crucial scrolling elements in `SafeArea` to prevent notches and system menus from clipping text. Furthermore, using `LayoutBuilder` instead of relying completely on global `MediaQuery` helps widgets define their structure based strictly on the bounds given by their direct parent, allowing responsive components to be reused anywhere in the app regardless of where they are placed.
+
+## Assignment: Scrollable Views with ListView & GridView (Sprint 2)
+
+### Project Title
+**Hostel Issue Tracker: Scrollable Data Sets**
+This section demonstrates how to build responsive, scrollable interfaces optimized for larger datasets using Flutter's `ListView.builder` and `GridView.builder`. We combined a horizontal scrolling list and a vertical grid into a master `SingleChildScrollView` to build a complex, unified scrolling screen reminiscent of modern application dashboards.
+
+### Code Snippets
+
+**1. Using ListView.builder for Horizontal Categories**
+We bind `scrollDirection: Axis.horizontal` to create a swipable carousel of category cards. A fixed-height `SizedBox` constrains it.
+```dart
+SizedBox(
+  height: 160,
+  child: ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return Container(
+        width: 140,
+        // Container styling and Column children...
+        child: Text('Category ${index + 1}'),
+      );
+    },
+  ),
+)
+```
+
+**2. Assembling GridView.builder for Dense Data**
+We generate a 2-column grid using `SliverGridDelegateWithFixedCrossAxisCount`. To prevent scrolling conflicts with the parent `SingleChildScrollView`, we disable its internal physics and force it to wrap its contents fully.
+```dart
+GridView.builder(
+  physics: const NeverScrollableScrollPhysics(), // Defers scrolling to the parent
+  shrinkWrap: true, // Forces the GridView to calculate its full height
+  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    crossAxisSpacing: 16,
+    mainAxisSpacing: 16,
+  ),
+  itemCount: 12,
+  itemBuilder: (context, index) {
+    return Container(
+      // Styling...
+      child: Center(child: Text('Grid Item ${index + 1}')),
+    );
+  },
+)
+```
+
+### Screenshots and Video Demo
+*Note: Replace the placeholders below with actual project media.*
+
+**ListView (Horizontal Scroll)**
+![ListView Snapshot](<link_to_listview_screenshot.png>)
+*Figure 17: The top section featuring horizontally scrollable category cards.*
+
+**GridView (Vertical Scroll)**
+![GridView Snapshot](<link_to_gridview_screenshot.png>)
+*Figure 18: The bottom section featuring the 2-column vertical grid nested gracefully down the page.*
+
+**Video Link:** [Link to Scrolling Demo Video](<your_video_link>)
+
+### Reflection
+**How do ListView and GridView improve UI efficiency?**
+Instead of attempting to squeeze infinite elements into a rigid screen or building complex constraint negotiations manually, `ListView` and `GridView` natively handle infinite overflow gracefully by providing high-performance scrollable viewports. They organize data strictly into rows or columns/tiles, enforcing visual consistency effortlessly across any aspect ratio.
+
+**Why is using builder constructors (ListView.builder, GridView.builder) recommended for large data sets?**
+Standard `ListView()` requires you to initialize and load every single widget inside its children array immediately, even if they are far off-screen. This is devastating to memory and startup times for lists with hundreds of items. 
+The `.builder()` constructor fixes this by implementing lazy loading. It acts as an infinite callback, only requesting Flutter to allocate memory and render a widget *exactly* when the user scrolls near that specific `index`. Once a widget scrolls entirely off-screen, it is destroyed to reclaim memory, allowing lists of 10,000 items to run incredibly smoothly on weak hardware.
+
+**What are common performance pitfalls to avoid with scrolling views?**
+The most severe pitfall is nested scrolling conflicts resulting in massive layout sweeps—specifically, nesting a `ListView` inside an unbounded `Column` throws unbounded height exceptions. To fix this, developers often use `shrinkWrap: true` on the inner list view. However, applying `shrinkWrap` to a list that possesses hundreds of items nullifies the `.builder` memory optimizations, as it forces the list to render everything instantly just to calculate its total height! True high-performance scrolling applications heavily rely on Slivers (`CustomScrollView`, `SliverList`) to coordinate multi-axis and heterogeneous scrollable content cleanly without `shrinkWrap`.
