@@ -365,3 +365,53 @@ Stateful widgets bring apps to life by listening for data changes and user event
 
 **Why is it important to separate static and reactive parts of the UI?**
 Separating static UI elements (Stateless) from reactive components (Stateful) is crucial for performance and maintainability. It prevents Flutter from unnecessarily rebuilding components that don't need to change. By isolating the dynamic behaviors to smaller Stateful widgets, the framework can perform localized updates, leading to a much more efficient app while keeping our code well-structured.
+
+## Assignment: Hot Reload & DevTools Demonstration (Sprint 2)
+
+### Project Title
+**Hostel Issue Tracker: Debugging workflow with DevTools**
+This section demonstrates how to use Flutter’s Hot Reload, Debug Console, and DevTools Suite to speed up the development process, monitor state changes in real-time, and profile application performance. We use the existing `StatelessStatefulDemoScreen` to trace interactions.
+
+### Step-by-Step Tool Usage
+
+**1. Hot Reload Workflow**
+*   **Action**: Ran the application via `flutter run` or the Start Debugging button in the IDE.
+*   **Modification**: Changed a widget property in the codebase (e.g., changed the text `'Count: $_counter'` to `'Current Tally: $_counter'`).
+*   **Result**: Saved the file. The UI updated instantaneously on the emulator preserving the current count (the state was not reset to 0).
+
+**2. Debug Console Usage**
+*   **Action**: Added a `debugPrint('Counter updated to $_counter');` statement inside the `setState` block of the `_incrementCounter` function.
+*   **Trigger**: Clicked the "Increase" button on the running app.
+*   **Result**: Observed the precise, formatted log message appearing immediately in the IDE’s Debug Console, proving the internal state updated successfully before the UI rebuilt.
+
+**3. Flutter DevTools Inspector**
+*   **Action**: Opened Flutter DevTools from the IDE (via the magnifying glass icon or command palette).
+*   **Feature Used**: Clicked on the **Widget Inspector** tab.
+*   **Result**: Explored the live widget tree. Used the "Select Widget Mode" to click on the screen and instantly highlight the corresponding code and widget properties in the inspector, validating layout constraints and padding visibly.
+
+### Screenshots and Video Demo
+*Note: Replace the placeholders below with the actual screenshots and video reference.*
+
+**Hot Reload in Action**
+![Hot Reload Update](<link_to_hot_reload_screenshot.png>)
+*Figure 10: App displaying immediate UI textual updates after a file save.*
+
+**Debug Console Logging**
+![Debug Console](<link_to_debug_console_screenshot.png>)
+*Figure 11: The IDE console showing the `debugPrint` output triggered by button presses.*
+
+**DevTools Widget Inspector**
+![DevTools Inspector](<link_to_devtools_screenshot.png>)
+*Figure 12: Flutter DevTools identifying the layout constraints of the interactive column.*
+
+**Video Link:** [Link to Demo Video Here](<your_video_link>)
+
+### Reflection
+**How does Hot Reload improve productivity?**
+Hot Reload fundamentally changes the development cycle. Instead of waiting minutes for an application to recompile and launch just to see if a padding adjustment or color tweak looks correct, Hot Reload injects the updated source code directly into the running Dart Virtual Machine in milliseconds. It preserves the current execution state (like user navigation or form inputs), allowing developers to iterate on UI designs instantly and maintain their train of thought.
+
+**Why is DevTools useful for debugging and optimization?**
+While `print` statements are fine for simple variable tracking, DevTools provides a forensic view of the entire application structure. The Widget Inspector visually exposes *why* a widget might be overflowing its bounds or ignoring alignment commands. The Performance and Memory tabs are irreplaceable for diagnosing janky animations (identifying frames taking >16ms) or finding memory leaks (like failing to dispose of controllers), moving debugging from guesswork to precision analysis.
+
+**How can you use these tools in a team development workflow?**
+In a team context, DevTools establishes a common, objective ground for finding bugs. If a QA engineer reports a UI glitch on a specific device, a developer can run DevTools to inspect exactly how the layout constraints are being calculated for that screen size. Furthermore, using `debugPrint` ensures that logs are clean and not dropped by internal Android/iOS loggers (unlike standard `print`). Teams can mandate checking the Performance tab before a PR is merged to guarantee new features do not degrade the app's framerate.
