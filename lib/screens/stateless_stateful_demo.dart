@@ -86,6 +86,7 @@ class _InteractiveAreaState extends State<InteractiveArea> {
   void _incrementCounter() {
     setState(() {
       _counter++;
+      debugPrint('Counter updated to $_counter');
     });
   }
 
