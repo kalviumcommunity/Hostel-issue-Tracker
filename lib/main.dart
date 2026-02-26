@@ -9,6 +9,7 @@ import 'screens/responsive_home.dart';
 import 'screens/reactive_demo_screen.dart';
 import 'screens/stateless_stateful_demo.dart';
 import 'screens/profile_screen.dart';
+import 'screens/responsive_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const AuthGate(),
         '/profile': (context) => const ProfileScreen(),
+        '/responsive': (context) => const ResponsiveLayout(),
       },
     );
   }

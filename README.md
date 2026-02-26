@@ -492,3 +492,93 @@ The Flutter `Navigator` operates as a Last-In, First-Out (LIFO) stack overlay. W
 
 **What are the benefits of using named routes in larger applications?**
 Named routes drastically simplify code maintenance as an app scales. Instead of manually importing the `ProfileScreen` file into 10 different unrelated UI files just to perform a `MaterialPageRoute` build, named routes centralize the destination logic in `main.dart`. UI layers only need to know a simple string `'/profile'` to jump anywhere in the app. This is crucial for deep linking (e.g., clicking a push notification), modular design, keeping compilation fast, and cleanly integrating with sophisticated analytical packages.
+
+## Assignment: Responsive Layout Design (Sprint 2)
+
+### Project Title
+**Hostel Issue Tracker: Responsive Core Layouts**
+This implementation demonstrates how to build a flexible Dashboard layout utilizing Flutter's core structural widgets: `Container`, `Row`, `Column`, alongside dynamic constraints like `Expanded` and `MediaQuery`. The screen detects the device width to render either a vertically scrollable stack (for phones) or a sophisticated multi-panel Row (for tablets and desktops).
+
+### Code Snippets
+
+**1. Using Containers for Styling and Boundaries**
+`Container` widgets are used as customizable boxes. Here, we define a header with specific height, colors, and rounded borders.
+```dart
+Container(
+  width: double.infinity,
+  height: 150,
+  decoration: BoxDecoration(
+    color: Theme.of(context).colorScheme.primaryContainer,
+    borderRadius: BorderRadius.circular(16),
+  ),
+  child: Center(
+    child: Text('Header Section'),
+  ),
+)
+```
+
+**2. Assembling Rows and Columns with Expanded**
+`Expanded` forces children to consume remaining space. In the Tablet view, we use a `Row` to align two `Expanded` panels side-by-side using `flex` values (2:1 ratio). In the Mobile view, we switch to a `Column` to stack them vertically.
+```dart
+// Tablet View snippet (Row)
+Row(
+  children: [
+    Expanded(flex: 2, child: Container(color: Colors.blue)),
+    const SizedBox(width: 16),
+    Expanded(flex: 1, child: Container(color: Colors.green)),
+  ],
+)
+
+// Mobile View snippet (Column)
+Column(
+  children: [
+    Expanded(child: Container(color: Colors.blue)),
+    const SizedBox(height: 16),
+    Expanded(child: Container(color: Colors.green)),
+  ],
+)
+```
+
+**3. Injecting MediaQuery for Responsiveness**
+We query the device's width natively. If it crosses the 600px breakpoint, we render the `Row` function; otherwise, we render the `Column` layout.
+```dart
+@override
+Widget build(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  bool isWideScreen = screenWidth > 600;
+
+  return Scaffold(
+    body: Column(
+      children: [
+        HeaderContainer(),
+        Expanded(
+          child: isWideScreen ? _buildWideLayout() : _buildNarrowLayout(),
+        ),
+      ],
+    ),
+  );
+}
+```
+
+### Screenshots and Video Demo
+*Note: Replace the placeholders below with actual project media.*
+
+**Mobile Screen (Portrait / Narrow)**
+![Mobile Layout](<link_to_mobile_responsive_screenshot.png>)
+*Figure 15: The app stacking all containers vertically gracefully on a narrow phone screen.*
+
+**Tablet Screen (Landscape / Wide)**
+![Tablet Layout](<link_to_tablet_responsive_screenshot.png>)
+*Figure 16: The app detecting a wide display and reorienting the panels into side-by-side Columns.*
+
+**Video Link:** [Link to Responsive Demo Video](<your_video_link>)
+
+### Reflection
+**Why is responsiveness important in mobile apps?**
+Responsiveness ensures the application remains universally accessible and professional regardless of the user's hardware. With the fragmented screen ecosystem (small phones, folding phones, tablets, and desktops), hard-coding pixel sizes guarantees an app will look broken (overflow errors) on some devices and comically sparse on others. Responsive design maximizes readability and interaction efficiency based natively on available space.
+
+**What challenges did you face while managing layout proportions?**
+The main challenge was handling constraints inside nested widgets. For example, placing a `Container` inside an unbounded `Column` without wrapping it in an `Expanded` widget leads to layout exceptions. Learning when to use specific fixed heights versus relative flexible `flex` values required mental mapping to visualize how Flutter’s layout engine negotiates space from parent to child.
+
+**How can you improve your layout for different screen orientations?**
+Beyond `MediaQuery` width checks, layouts can be improved by wrapping crucial scrolling elements in `SafeArea` to prevent notches and system menus from clipping text. Furthermore, using `LayoutBuilder` instead of relying completely on global `MediaQuery` helps widgets define their structure based strictly on the bounds given by their direct parent, allowing responsive components to be reused anywhere in the app regardless of where they are placed.

@@ -60,6 +60,14 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(Icons.person),
                 tooltip: 'Profile',
               ),
+              IconButton(
+                onPressed: () {
+                  // Navigate to the pure responsive layout demo
+                  Navigator.pushNamed(context, '/responsive');
+                },
+                icon: const Icon(Icons.dashboard_customize),
+                tooltip: 'Responsive Testing',
+              ),
               IconButton(onPressed: () => FirebaseAuth.instance.signOut(), icon: const Icon(Icons.logout))
             ],
           ),
