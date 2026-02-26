@@ -68,6 +68,14 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(Icons.dashboard_customize),
                 tooltip: 'Responsive Testing',
               ),
+              IconButton(
+                onPressed: () {
+                  // Navigate to the Scrollable Views demo
+                  Navigator.pushNamed(context, '/scrollable');
+                },
+                icon: const Icon(Icons.view_list),
+                tooltip: 'Scrollable Views',
+              ),
               IconButton(onPressed: () => FirebaseAuth.instance.signOut(), icon: const Icon(Icons.logout))
             ],
           ),
