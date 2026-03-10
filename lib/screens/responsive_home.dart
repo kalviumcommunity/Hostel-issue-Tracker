@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ResponsiveHome extends StatelessWidget {
-  const ResponsiveHome({super.key});
+  const ResponsiveHome({super.key})
 
   @override
   Widget build(BuildContext context) {

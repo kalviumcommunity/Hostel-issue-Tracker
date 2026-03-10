@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Just in case, though not used here directly
 import 'login_screen.dart';
 import 'home_screen.dart';
-import '../main.dart'; // Import for AuthGate if needed, or we can navigate directly
+import '../main.dart'
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
